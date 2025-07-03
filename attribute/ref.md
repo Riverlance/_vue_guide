@@ -19,7 +19,7 @@ Use $refs as a last option when props, emits and reactive bindings don't meet yo
 
 * **Case 1** - To manipulate a DOM element directly
 
-Modern way (pure Composition API):
+Modern way (simplified Composition API):
 
 ```html
 <template>
@@ -60,7 +60,7 @@ Old way:
 
 * **Case 2** - To call methods on a child component
 
-Modern way (pure Composition API):
+Modern way (simplified Composition API):
 
 ```html
 <!-- ChildComponent.vue -->
@@ -146,7 +146,7 @@ Old way:
 
 * **Case 3** - To read internal state of a child component that's not exposed via props or emits
 
-Modern way (pure Composition API):
+Modern way (simplified Composition API):
 
 ```html
 <!-- ChildComponent.vue -->

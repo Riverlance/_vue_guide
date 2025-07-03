@@ -278,7 +278,6 @@ const app = Vue.createApp({
 
 # 💻 Using Vue
 
-
 * Installs all project dependencies.
 ```
 npm install
@@ -301,6 +300,6 @@ npm run build
 > You can create a global .css file, like at `src/assets/css/global.css`.<br>
 > You can include it globally by importing in `src/main.js` as `import './assets/css/global.css'`.
 
-## ▶ Pure Composition API — `setup` on `<script>`: `<script setup>`
+## ▶ Simplified Composition API — `setup` on `<script>`: `<script setup>`
 
 <!-- todo -->
