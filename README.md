@@ -1,11 +1,13 @@
 # Vue 3 guide
 
-In this tutorial, we will use **Vue.js 3.0.2**.
-
 > [!tip]
   **Docs**: https://vuejs.org/guide/introduction.html
 
-## ▶ Using Vue as a component in a Website
+---
+---
+---
+
+# 💻 Using Vue as a component in a Website
 
 This means, you can have your normal Website and inject Vue on it.<br>
 To use as component, we will learn the basics only.
@@ -243,7 +245,7 @@ const app = Vue.createApp({
 ```
 
 13. `[Computed values]` Reactive values that are automatically updated when their dependencies change.<br>
-  It’s ideal for filtering or transforming data based on the component’s state, without repeating logic inside the template.<br>
+  It's ideal for filtering or transforming data based on the component's state, without repeating logic inside the template.<br>
   Unlike methods, computed properties are cached and only re-evaluated when needed, which improves performance and keeps your code clean and efficient.
 ```js
 const app = Vue.createApp({
@@ -274,6 +276,352 @@ const app = Vue.createApp({
 ---
 ---
 
-## ▶ Using Vue
+# 💻 Using Vue
+
+
+* Installs all project dependencies.
+```
+npm install
+```
+
+* Compiles and hot-reloads for development. (*1)
+```
+npm run serve
+```
+
+* Compiles and minifies for production. (*1)
+```
+npm run build
+```
+
+> [!note]
+> (*1) You can find this script type in `package.json`.
+
+> [!tip]
+> You can create a global .css file, like at `src/assets/css/global.css`.<br>
+> You can include it globally by importing in `src/main.js` as `import './assets/css/global.css'`.
+
+## ▶ Scoped style — `<style scoped>`
+
+### What is that?
+
+The `scoped` attribute ensures that the styles apply only to this component, not globally.<br>
+It isolate styles in the component DOM.
+
+> [!important]
+> If you will use a CSS framework like Tailwind, you will only need this to make exceptions or fixes.<br>
+> You can also have two separate `<style>` blocks, one scoped and one module scoped, although it is rare to need both simultaneously.
+
+### When to use it?
+
+Use `<style scoped>` when you want your styles to apply only to the current component without affecting others.
+
+### How to use it?
+
+```html
+<!-- Component1.vue -->
+
+<template>
+  <p>Hello!</p> <!-- Will be affected by the red color -->
+</template>
+
+<style scoped>
+  p { color: red; }
+</style>
+
+<!-- Component2.vue -->
+
+<template>
+  <p>Hello!</p> <!-- Will NOT be affected by the red color -->
+</template>
+```
+
+The `<p>` tag inside this component will be red, but `<p>` tags elsewhere won't be affected.
+
+> [!tip]
+> You can still apply global styles with `:global(...)`:
+```html
+<style scoped>
+  p { color: red; } /* Scoped to this component only */
+  :global(body) { background: #eee; } /* Affects all components */
+</style>
+```
+
+## ▶ Module style — `<style module>`
+
+### What is that?
+
+The `module` attribute makes CSS classes unique for each component.<br>
+It prevents styles with the same name from mixing between different components.<br>
+It isolate class names in JavaScript.
+
+> [!important]
+> If you will use a CSS framework like Tailwind, you will only need this to make exceptions or fixes.<br>
+> You can also have two separate `<style>` blocks, one scoped and one module scoped, although it is rare to need both simultaneously.
+
+### When to use it?
+
+Use `<style module>` when you want to generate unique class names and avoid any style conflicts between components.
+
+### How to use it?
+
+```html
+<!-- Component1.vue -->
+
+<template>
+  <p :class="$style.title">Hello!</p> <!-- Will be affected by the green color -->
+</template>
+
+<style module>
+  .title { color: green; }
+</style>
+
+<!-- Component2.vue -->
+
+<template>
+  <p :class="$style.title">Hello!</p> <!-- Will NOT be affected by Component1 styles -->
+</template>
+
+<style module>
+  .title { color: blue; }
+</style>
+```
+
+Each component has its own version of the `.title` class with a unique name like `.title__abc123`, so the styles won't conflict, even if the class names are the same.
+
+> [!tip]
+> You can still apply global styles with `:global(...)`:
+```html
+<style module>
+  .title { color: green; } /* Scoped to this component only */
+  :global(body) { background: #eee; } /* Affects all components */
+</style>
+```
+
+## ▶ Pure Composition API — `setup` on `<script>`: `<script setup>`
 
 <!-- todo -->
+
+## ▶ $refs
+
+### What is that?
+
+The $refs is used to access DOM elements or component instances directly from JavaScript.<br>
+Use $refs as a last option when props, emits and reactive bindings don't meet your needs.
+
+> [!warning]
+> Vue recommends using $refs only when necessary, because it breaks the reactive flow.<br>
+> Meaning you bypass Vue's preferred way of managing state and UI updates.
+
+### When to use it?
+
+* **Case 1**: To manipulate a DOM element directly (e.g., focus an input, add/remove classes).
+* **Case 2**: To call methods on a child component (e.g., open a modal, reset a form).
+* **Case 3**: To read internal state of a child component that's not exposed via props or emits.
+
+### How to use it?
+
+* **Case 1** - To manipulate a DOM element directly
+
+Modern way (pure Composition API):
+
+```html
+<template>
+  <input ref="name" type="text" placeholder="Your name" />
+  <button @click="activate">Activate</button>
+</template>
+
+<script setup>
+  import { ref } from 'vue'
+
+  const name     = ref(null)
+  const activate = () => {
+    name.value.classList.add('active') // Add a class using JS
+    name.value.focus()                 // Focus the input
+  }
+</script>
+```
+
+Old way:
+
+```html
+<template>
+  <input ref="name" type="text" placeholder="Your name" />
+  <button @click="activate">Activate</button>
+</template>
+
+<script>
+  export default {
+    methods: {
+      activate() {
+        this.$refs.name.classList.add('active') // Add a class using JS
+        this.$refs.name.focus()                 // Focus the input
+      }
+    }
+  }
+</script>
+```
+
+* **Case 2** - To call methods on a child component
+
+Modern way (pure Composition API):
+
+```html
+<!-- ChildComponent.vue -->
+
+<template>
+  <input v-model="name" />
+</template>
+
+<script setup>
+  import { ref } from 'vue'
+
+  const name      = ref('')
+  const resetForm = () => {
+    name.value = ''
+  }
+
+  defineExpose({ resetForm })
+</script>
+
+<!-- ParentComponent.vue -->
+
+<template>
+  <ChildComponent ref="child" />
+  <button @click="resetChild">Reset Child</button>
+</template>
+
+<script setup>
+  import { ref }        from 'vue'
+  import ChildComponent from './ChildComponent.vue'
+
+  const child      = ref(null)
+  const resetChild = () => {
+    child.value.resetForm() // Calls method inside child
+  }
+</script>
+```
+
+Old way:
+
+```html
+<!-- ChildComponent.vue -->
+
+<template>
+  <input v-model="name" />
+</template>
+
+<script>
+  export default {
+    data() {
+      return {
+        name: ''
+      }
+    },
+
+    methods: {
+      resetForm() {
+        this.name = ''
+      }
+    }
+  }
+</script>
+
+<!-- ParentComponent.vue -->
+
+<template>
+  <ChildComponent ref="child" />
+  <button @click="resetChild">Reset Child</button>
+</template>
+
+<script>
+  import ChildComponent from './ChildComponent.vue'
+
+  export default {
+    components: { ChildComponent },
+    methods: {
+      resetChild() {
+        this.$refs.child.resetForm() // Calls method inside child
+      }
+    }
+  }
+</script>
+```
+
+* **Case 3** - To read internal state of a child component that's not exposed via props or emits
+
+Modern way (pure Composition API):
+
+```html
+<!-- ChildComponent.vue -->
+
+<template>
+  <button @click="counter++">Clicked {{ counter }} times</button>
+</template>
+
+<script setup>
+  import { ref } from 'vue'
+
+  const counter = ref(0)
+
+  defineExpose({ counter })
+</script>
+
+<!-- ParentComponent.vue -->
+
+<template>
+  <ChildComponent ref="child" />
+  <button @click="showInternalState">Show Internal State</button>
+</template>
+
+<script setup>
+  import { ref }        from 'vue'
+  import ChildComponent from './ChildComponent.vue'
+
+  const child = ref(null)
+
+  const showInternalState = () => {
+    console.log(child.value.counter) // Access internal reactive variable
+  }
+</script>
+```
+
+Old way:
+
+```html
+<!-- ChildComponent.vue -->
+
+<template>
+  <button @click="counter++">Clicked {{ counter }} times</button>
+</template>
+
+<script>
+  export default {
+    data() {
+      return {
+        counter: 0
+      }
+    }
+  }
+</script>
+
+<!-- ParentComponent.vue -->
+
+<template>
+  <ChildComponent ref="child" />
+  <button @click="showInternalState">Show Internal State</button>
+</template>
+
+<script>
+  import ChildComponent from './ChildComponent.vue'
+
+  export default {
+    components: { ChildComponent },
+    methods: {
+      showInternalState() {
+        console.log(this.$refs.child.counter)
+      }
+    }
+  }
+</script>
+```
