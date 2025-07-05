@@ -20,6 +20,12 @@ Use `<script setup>` when you want to write cleaner, faster and more modern comp
   <p>{{ message }} - {{ number }}</p> <!-- Will display the message from the script -->
   <a :href="url" :target="anotherTab ? '_blank' : '_self'">Click here!</a>
   <a href="//google.com" target="_blank">Click here!</a> <!-- Same as above -->
+
+  <span :class="isFavorite ? 'fav' : ''">Lorem ipsum</span>
+  <span :class="[isFavorite ? 'fav' : '', isSelected ? 'sel' : '']">Lorem ipsum</span>
+  <span :class="[isFavorite ? 'fav' : '']">Lorem ipsum</span>
+  <span :class="{ fav: isFavorite, sel: isSelected }">Lorem ipsum</span>
+  <span :class="{ fav: isFavorite }">Lorem ipsum</span>
 </template>
 
 <script setup>

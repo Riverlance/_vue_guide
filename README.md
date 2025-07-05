@@ -229,22 +229,7 @@ const app = Vue.createApp({
 </div>
 ```
 
-12. `[Dynamic class]` Allows you to apply CSS classes to elements based on reactive data.
-```js
-// as mentioned before
-```
-```html
-<div id="app">
-  <!-- as mentioned before -->
-  <span :class="isFavorite ? 'fav' : ''">Lorem ipsum</span>
-  <span :class="[isFavorite ? 'fav' : '', isSelected ? 'sel' : '']">Lorem ipsum</span>
-  <span :class="[isFavorite ? 'fav' : '']">Lorem ipsum</span>
-  <span :class="{ fav: isFavorite, sel: isSelected }">Lorem ipsum</span>
-  <span :class="{ fav: isFavorite }">Lorem ipsum</span>
-</div>
-```
-
-13. `[Computed values]` Reactive values that are automatically updated when their dependencies change.<br>
+12. `[Computed values]` Reactive values that are automatically updated when their dependencies change.<br>
   It's ideal for filtering or transforming data based on the component's state, without repeating logic inside the template.<br>
   Unlike methods, computed properties are cached and only re-evaluated when needed, which improves performance and keeps your code clean and efficient.
 ```js
