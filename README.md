@@ -293,13 +293,12 @@ npm run serve
 npm run build
 ```
 
+> [!important]
+> Read all `.md` files in this repository to learn.
+
 > [!note]
 > (*1) You can find this script type in `package.json`.
 
 > [!tip]
 > You can create a global .css file, like at `src/assets/css/global.css`.<br>
 > You can include it globally by importing in `src/main.js` as `import './assets/css/global.css'`.
-
-## ▶ Simplified Composition API — `setup` on `<script>`: `<script setup>`
-
-<!-- todo -->
