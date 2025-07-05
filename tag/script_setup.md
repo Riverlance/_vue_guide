@@ -17,11 +17,16 @@ Use `<script setup>` when you want to write cleaner, faster and more modern comp
 
 ```html
 <template>
-  <p>{{ message }}</p> <!-- Will display the message from the script -->
+  <p>{{ message }} - {{ number }}</p> <!-- Will display the message from the script -->
+  <a :href="url" :target="anotherTab ? '_blank' : '_self'">Click here!</a>
+  <a href="//google.com" target="_blank">Click here!</a> <!-- Same as above -->
 </template>
 
 <script setup>
-const message = 'Hello from setup!'
+  const message    = 'Hello from setup!'
+  const number     = 7
+  const url        = '//google.com'
+  const anotherTab = true
 </script>
 ```
 
