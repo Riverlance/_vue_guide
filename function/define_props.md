@@ -6,6 +6,9 @@ The `defineProps()` function allows a child component to receive data from its p
 It is a special function that works only inside `<script setup>` and gives access to the component’s props.<br>
 Props are how you pass values from a parent to a child component (like a user name, an ID or a configuration value).
 
+> [!tip]
+> This content is related to `<script setup>`, `defineEmits()` and `withDefaults()`.
+
 ### When to use it?
 
 Use `defineProps()` when you want the component to accept data from its parent.

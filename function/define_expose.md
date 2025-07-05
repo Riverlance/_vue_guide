@@ -6,6 +6,9 @@ Inside a `<script setup>` block, everything you declare is automatically availab
 However, none of those variables or functions are exposed to the parent component by default — even if the parent uses `ref` to access the child.<br>
 To explicitly expose something to the outside (parent), you need to use `defineExpose()`.
 
+> [!tip]
+> This content is related to `<script setup>`.
+
 ### When to use it?
 
 Use defineExpose() when you want the parent component to be able to call a method; or access a variable of the child component (avoid this; it breaks the reactive flow).
