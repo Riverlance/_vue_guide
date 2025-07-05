@@ -17,7 +17,9 @@ Use `<script setup>` when you want to write cleaner, faster and more modern comp
 
 ```html
 <template>
-  <p>{{ message }} - {{ number }}</p> <!-- Will display the message from the script -->
+  <p v-if="isMessageVisible">{{ message }} - {{ number }}</p>
+  <button @click="toggleMessage">Toggle Message</button> <!-- This will hide/show the `<p>` content above -->
+
   <a :href="url" :target="anotherTab ? '_blank' : '_self'">Click here!</a>
   <a href="//google.com" target="_blank">Click here!</a> <!-- Same as above -->
 
@@ -26,9 +28,17 @@ Use `<script setup>` when you want to write cleaner, faster and more modern comp
   <span :class="[isFavorite ? 'fav' : '']">Lorem ipsum</span>
   <span :class="{ fav: isFavorite, sel: isSelected }">Lorem ipsum</span>
   <span :class="{ fav: isFavorite }">Lorem ipsum</span>
+
 </template>
 
 <script setup>
+  import { ref } from 'vue'
+
+  const isMessageVisible = ref(true)
+  function toggleMessage() {
+    isMessageVisible = !isMessageVisible
+  }
+
   const message    = 'Hello from setup!'
   const number     = 7
   const url        = '//google.com'
