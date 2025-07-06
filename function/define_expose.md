@@ -11,7 +11,7 @@ To explicitly expose something to the outside (parent), you need to use `defineE
 
 ### When to use it?
 
-Use defineExpose() when you want the parent component to be able to call a method; or access a variable of the child component (avoid this; it breaks the reactive flow).
+Use `defineExpose()` when you want the parent component to be able to call a method; or access a variable of the child component (avoid this; it breaks the reactive flow).
 
 ### How to use it?
 
