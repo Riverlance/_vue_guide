@@ -1,4 +1,4 @@
-## ▶ Exposing to parent — `defineExpose()`
+## ▶ Event Modifiers
 
 ### What is it?
 
