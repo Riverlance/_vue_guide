@@ -1,4 +1,4 @@
-## ▶ Exposing to parent — `defineExpose()`
+## ▶ Custom content — `v-slot`
 
 ### What is that?
 
