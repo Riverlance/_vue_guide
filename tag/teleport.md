@@ -1,6 +1,6 @@
 ## ▶ Rendering in another place — `<teleport to="...">`
 
-### What is that?
+### What is it?
 
 By default, every component is rendered inside the same part of the DOM where it's declared in the template.<br>
 However, sometimes you want a component to be rendered elsewhere in the DOM, even though it is declared inside another component.<br>

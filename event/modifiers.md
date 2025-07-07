@@ -1,6 +1,6 @@
 ## ▶ Exposing to parent — `defineExpose()`
 
-### What is that?
+### What is it?
 
 When you add an event listener like `@click`, it works just like a regular DOM event.<br>
 However, sometimes you need to adjust how or when the event runs.<br>

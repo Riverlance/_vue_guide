@@ -1,6 +1,6 @@
 ## ▶ Sending events out — defineEmits()
 
-### What is that?
+### What is it?
 
 The `defineEmits()` function allows a child component to send events to its parent.<br>
 It is a special function that works only inside `<script setup>` and is used to define and trigger custom events.<br>

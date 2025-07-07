@@ -1,6 +1,6 @@
 ## ▶ Scoped style — `<style scoped>`
 
-### What is that?
+### What is it?
 
 The `scoped` attribute ensures that the styles apply only to this component, not globally.<br>
 It isolate styles in the component DOM.

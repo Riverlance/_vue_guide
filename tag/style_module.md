@@ -1,6 +1,6 @@
 ## ▶ Module style — `<style module>`
 
-### What is that?
+### What is it?
 
 The `module` attribute makes CSS classes unique for each component.<br>
 It prevents styles with the same name from mixing between different components.<br>

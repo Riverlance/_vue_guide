@@ -1,6 +1,6 @@
 ## ▶ Lifecycle Hooks
 
-### What is that?
+### What is it?
 
 Lifecycle hooks are special functions that are called at different stages of a component's life:
 * Create — When it is created (*1);

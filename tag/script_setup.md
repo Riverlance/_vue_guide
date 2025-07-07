@@ -1,6 +1,6 @@
 ## ▶ Simplified Composition API — `<script setup>`
 
-### What is that?
+### What is it?
 
 The `setup` attribute activates the Composition API in a simplified way.<br>
 It removes the need for `export default`, the `setup()` function or manually returning variables.<br>

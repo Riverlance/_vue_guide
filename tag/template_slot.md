@@ -1,6 +1,6 @@
 ## ▶ Custom content — `v-slot`
 
-### What is that?
+### What is it?
 
 `v-slot`, or simply `#`, is a way to pass custom content into a component from the outside.<br>
 Some components, like `<Modal>`, `<Card>`, `<Dropdown>`, are designed to be reused with different inner content.<br>

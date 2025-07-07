@@ -1,6 +1,6 @@
 ## ▶ Passing data in — defineProps()
 
-### What is that?
+### What is it?
 
 The `defineProps()` function allows a child component to receive data from its parent.<br>
 It is a special function that works only inside `<script setup>` and gives access to the component’s props.<br>

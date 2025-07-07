@@ -1,6 +1,6 @@
 ## ▶ Exposing to parent — `defineExpose()`
 
-### What is that?
+### What is it?
 
 Inside a `<script setup>` block, everything you declare is automatically available to the `<template>` of the same component.<br>
 However, none of those variables or functions are exposed to the parent component by default — even if the parent uses `ref` to access the child.<br>

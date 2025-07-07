@@ -1,6 +1,6 @@
 ## ▶ $refs
 
-### What is that?
+### What is it?
 
 The $refs is used to access DOM elements or component instances directly from JavaScript.<br>
 Use $refs as a last option when props, emits and reactive bindings don't meet your needs.
