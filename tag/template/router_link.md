@@ -46,7 +46,7 @@ But in small projects, internal applications or critical real-time applications,
 npm install vue-router
 ```
 
-1. Create your router file
+2. Create your router file
 
 ```js
 // src/router/index.js
@@ -150,10 +150,15 @@ export default {
 
 <template>
   <h1>Jobs</h1>
-  <div v-for="job in jobs" :key="job.id">
-    <router-link :to="{ name: 'job_details', params: { id: job.id } }">
-      <h2>{{ job.title }}</h2>
-    </router-link>
+  <div v-if="jobs.length">
+    <div v-for="job in jobs" :key="job.id">
+      <router-link :to="{ name: 'job_details', params: { id: job.id } }">
+        <h2>{{ job.title }}</h2>
+      </router-link>
+    </div>
+  </div>
+  <div v-else>
+    <h2>Loading...</h2>
   </div>
 </template>
 
@@ -182,8 +187,14 @@ export default {
 <!-- JobDetailsView.vue -->
 
 <template>
-  <h1>Job Details Page</h1>
-  <p>The job id is {{ id }}</p>
+  <div v-if="job">
+    <h1>{{ job.title }}</h1>
+    <p>The job id is {{ id }}</p>
+    <p>{{ job.details }}</p>
+  </div>
+  <div v-else>
+    <h2>Loading...</h2>
+  </div>
 </template>
 
 <script>
