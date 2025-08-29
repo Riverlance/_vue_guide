@@ -221,3 +221,83 @@ Old way:
   }
 </script>
 ```
+
+### Extra: Refs vs Reactive
+
+#### Reactive doesn't work for primitive values
+
+Reactive doesn't work for primitive values; it expects an object as a parameter.
+If you try to update its value later, it won't update on templates.
+```js
+let name = reactive('Luigi') // Gives a warning (invalid value)
+const update = () => { name = 'Yoshi' } // or { name = reactive('Yoshi') } // Doesn't update on templates
+return { name, update }
+```
+```html
+<p>{{ name }}</p>
+<button @click="update">Update</button>
+```
+
+* Correct way for reactive - "Always use the object itself, instead of primitive values or individual properties":
+```js
+const obj = reactive({ name: 'Luigi' })
+const update = () => { obj.name = 'Yoshi' } // Updates on templates
+return { obj, update }
+```
+```html
+<p>{{ obj.name }}</p>
+<button @click="update">Update</button>
+```
+
+* With ref:
+```js
+const name = ref('Luigi')
+const update = () => { name.value = 'Yoshi' } // Updates on templates
+return { name, update }
+```
+```html
+<p>{{ name }}</p>
+<button @click="update">Update</button>
+```
+
+#### Reactive can lose its reactivity
+
+Reactive can lose its reactivity if you try to pass one of its properties instead of the whole object.
+```js
+const obj = reactive({ name: 'Luigi' })
+return { name: obj.name } // Reactivity of 'name' is lost, since 'name' becomes just a plain value
+```
+```html
+<p>{{ name }}</p>
+<button @click="name = 'Yoshi'">Update</button> // Doesn't update on templates
+```
+
+* Correct way for reactive - "Always use the object itself, instead of primitive values or individual properties":
+```js
+const obj = reactive({ name: 'Luigi' })
+const update = () => { obj.name = 'Yoshi 2' } // Updates on templates
+return { obj, update }
+```
+```html
+<p>{{ obj.name }}</p>
+<button @click="obj.name = 'Yoshi'">Update</button> // Works
+<button @click="update">Update 2</button>
+```
+
+* With ref:
+```js
+const obj = ref({ name: 'Luigi' })
+const update = () => { obj.value.name = 'Yoshi 2' } // Updates on templates
+return { obj, update }
+```
+```html
+<p>{{ obj.name }}</p> <!-- Vue unwraps .value in templates; no need to use obj.name.value -->
+<button @click="obj.name = 'Yoshi'">Update</button> // Works
+<button @click="update">Update 2</button>
+```
+
+#### Resume
+
+If you use `reactive`, always work with the entire object, both when creating and when returning it from a composition function.
+Avoid using `reactive` for primitive values or individual properties in the return.
+For both reasons, `ref` is generally safer and simpler, especially when dealing with primitive values or when exposing properties individually from composition functions.
