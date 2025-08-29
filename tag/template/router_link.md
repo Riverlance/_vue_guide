@@ -118,6 +118,135 @@ export default router
 
 3. Add `<router-view>` to your app with `<router-link>`
 
+Composition API:
+
+```html
+<!-- App.vue -->
+
+<template>
+  <nav>
+    <!-- By path -->
+    <!-- <router-link to="/">Home</router-link> | -->
+    <!-- <router-link to="/about">About</router-link> -->
+
+    <!-- By route name -->
+    <router-link :to="{ name: 'home' }">Home</router-link> |
+    <router-link :to="{ name: 'about' }">About</router-link>
+  </nav>
+
+  <button @click="redirect">Redirect</button>
+  <button @click="back">Go back</button>
+  <button @click="forward">Go forward</button>
+
+  <router-view /> <!-- The current page content will be injected here -->
+</template>
+
+<script>
+import { getCurrentInstance } from 'vue'
+
+export default {
+  setup() {
+    const { proxy } = getCurrentInstance() // Access this.$router
+
+    const redirect = () => proxy.$router.push({ name: 'home' }) // Go to 'home' page
+    const back     = () => proxy.$router.back() // proxy.$router.go(-1) // Alias
+    const forward  = () => proxy.$router.forward() // proxy.$router.go(1) // Alias
+
+    return { redirect, back, forward }
+  }
+}
+</script>
+
+<!-- JobsView.vue -->
+
+<template>
+  <h1>Jobs</h1>
+  <div v-if="error">{{ error }}</div>
+  <div v-else-if="jobs.length">
+    <div v-for="job in jobs" :key="job.id">
+      <router-link :to="{ name: 'job_details', params: { id: job.id } }">
+        <h2>{{ job.title }}</h2>
+      </router-link>
+    </div>
+  </div>
+  <div v-else>
+    <h2>Loading...</h2>
+  </div>
+</template>
+
+<script>
+import { ref, onMounted } from 'vue'
+
+export default {
+  setup() {
+    const jobs = ref([])
+    const error = ref(null)
+
+    const loadJobs = async () => {
+      try {
+        const response = await fetch('http://localhost:3000/jobs')
+        if (!response.ok) throw Error('No data available.')
+        jobs.value = await response.json()
+      } catch(err) {
+        error.value = err.message
+        console.log(error.value)
+      }
+    }
+    onMounted(loadJobs)
+
+    return { jobs, error }
+  }
+}
+</script>
+
+<!-- JobDetailsView.vue -->
+
+<template>
+  <div v-if="job">
+    <h1>{{ job.title }}</h1>
+    <p>The job id is {{ id }}</p>
+    <p>{{ job.details }}</p>
+  </div>
+  <div v-else-if="error">
+    <h2>{{ error }}</h2>
+  </div>
+  <div v-else>
+    <h2>Loading...</h2>
+  </div>
+</template>
+
+<script>
+import { ref, onMounted } from 'vue'
+
+export default {
+  // With "props: true" in the route
+  props: ['id'],
+
+  setup(props) {
+    const job = ref(null)
+    const error = ref(null)
+
+    const loadJob = async () => {
+      try {
+        const response = await fetch(`http://localhost:3000/jobs/${props.id}`)
+        if (!response.ok) throw Error('Job not found.')
+        job.value = await response.json()
+      } catch(err) {
+        error.value = err.message
+        console.log(error.value)
+      }
+    }
+    onMounted(loadJob)
+
+    return { job, error, id: props.id }
+  }
+}
+</script>
+
+```
+
+Options API:
+
 ```html
 <!-- App.vue -->
 
@@ -153,7 +282,8 @@ export default {
 
 <template>
   <h1>Jobs</h1>
-  <div v-if="jobs.length">
+  <div v-if="error">{{ error }}</div>
+  <div v-else-if="jobs.length">
     <div v-for="job in jobs" :key="job.id">
       <router-link :to="{ name: 'job_details', params: { id: job.id } }">
         <h2>{{ job.title }}</h2>
@@ -195,6 +325,9 @@ export default {
     <p>The job id is {{ id }}</p>
     <p>{{ job.details }}</p>
   </div>
+  <div v-else-if="error">
+    <h2>{{ error }}</h2>
+  </div>
   <div v-else>
     <h2>Loading...</h2>
   </div>
@@ -223,9 +356,10 @@ export default {
   },
 }
 </script>
+```
 
+```html
 <!-- NotFoundView.vue -->
-
 <template>
   <h2>404</h2>
   <h3>Page not found.</h3>
