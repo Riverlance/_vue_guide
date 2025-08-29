@@ -30,6 +30,16 @@ But in small projects, internal applications or critical real-time applications,
 
 ### How to use it?
 
+> [!tip]
+  To install `vue-router` on dependencies, you can use the following command:<br>
+  `npm install vue-router`
+
+> [!tip]
+  To install `json-server` on dependencies, you can use the following command:<br>
+  `npm install json-server`<br>
+  To watch the server, you can use the following command:<br>
+  `npx json-server --watch path-to-file/db.json`
+
 1. Install `vue-router` (if not already)
 
 ```bash
@@ -151,13 +161,21 @@ export default {
 export default {
   data() {
     return {
-      jobs: [
-        { id: 1, title: 'Ninja UX Designer', details: 'Lorem ipsum dolor sit amet.'},
-        { id: 2, title: 'Ninja Web Developer', details: 'Lorem, ipsum dolor sit amet consectetur adipisicing.'},
-        { id: 3, title: 'Ninja Vue Developer', details: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolorum, molestiae?'},
+      jobs: [ // Filled with data from db.json through json-server; The data below is just an example for manual filling
+        // { id: 1, title: 'Ninja UX Designer', details: 'Lorem ipsum dolor sit amet.'},
+        // { id: 2, title: 'Ninja Web Developer', details: 'Lorem, ipsum dolor sit amet consectetur adipisicing.'},
+        // { id: 3, title: 'Ninja Vue Developer', details: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolorum, molestiae?'},
       ]
     }
-  }
+  },
+
+  // json-server: Setting up `jobs` with data from `db.json`
+  mounted() {
+    fetch('http://localhost:3000/jobs')
+      .then(result => result.json())
+      .then(data => this.jobs = data)
+      .catch(error => console.log(error.message))
+  },
 }
 </script>
 
@@ -175,6 +193,20 @@ export default {
 
   // With "props: true" in the route
   props: [ 'id' ],
+
+  data() {
+    return {
+      job: null,
+    }
+  },
+
+  // json-server: Setting up `job` with data from `id`
+  mounted() {
+    fetch('//localhost:3000/jobs/' + this.id)
+      .then(result => result.json())
+      .then(data => this.job = data)
+      .catch(error => console.log(error.message))
+  },
 }
 </script>
 
@@ -184,4 +216,15 @@ export default {
   <h2>404</h2>
   <h3>Page not found.</h3>
 </template>
+```
+
+`db.json` - used to fill `jobs` inside `JobsView.vue` through `json-server`:
+```json
+{
+  "jobs": [
+    { "id": 1, "title": "Ninja UX Designer", "details": "Lorem ipsum dolor sit amet." },
+    { "id": 2, "title": "Ninja Web Developer", "details": "Lorem, ipsum dolor sit amet consectetur adipisicing." },
+    { "id": 3, "title": "Ninja Vue Developer", "details": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolorum, molestiae?" }
+  ]
+}
 ```
