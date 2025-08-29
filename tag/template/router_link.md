@@ -38,7 +38,10 @@ But in small projects, internal applications or critical real-time applications,
   To install `json-server` on dependencies, you can use the following command:<br>
   `npm install json-server`<br>
   To watch the server, you can use the following command:<br>
-  `npx json-server --watch path-to-file/db.json`
+  `npx json-server --watch path-to-file/db.json`<br>
+  Or do it globally:<br>
+  `npm install -g json-server`<br>
+  `json-server --watch data/db.json`
 
 1. Install `vue-router` (if not already)
 
