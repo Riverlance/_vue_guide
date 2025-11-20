@@ -112,9 +112,31 @@ function handleKeyDown(event) {
     ; // Handle backspace
 }
 </script>
+
+<!-- For more complex handling -->
+<input @keyup="handleKeyUp($event, 'hello')" />
+<script setup>
+function handleKeyUp(event, helloData) {
+  if (event.key === 'Enter')
+    console.log('Data: ' + helloData) // Output: "Data: hello"
+}
+</script>
+
+<!-- For more complex handling -->
+<input @keydown="handleKeyDown2('hello again')" />
+<script setup>
+function handleKeyDown2(helloData) {
+  console.log('Data: ' + helloData) // Output: "Data: hello again"
+}
+</script>
 ```
 
 > [!tip]
 > After `click`, `keyup`, `keydown` and so on, the order does not matter.<br>
 > For example: `@click.ctrl.shift.exact`, `@click.shift.ctrl.exact`, `@click.exact.shift.ctrl`.<br>
 > They are all correct.
+
+> [!tip]
+> <button v-on:click="age++">Increase age</button>
+> <button @click="title = 'Something else'">Click to update the title</button>
+> You can write a command like these, but it is not recommended.
