@@ -303,3 +303,38 @@ npm run build
 > [!tip]
 > You can create a global .css file, like at `src/assets/css/global.css`.<br>
 > You can include it globally by importing in `src/main.js` as `import './assets/css/global.css'`.
+
+---
+
+## Importing
+
+Use `.` for relative imports.<br>
+Use `@` for absolute imports: `@` == `src`.
+
+```html
+<template>
+  <img src="./assets/logo.png">
+  <img src="@/assets/logo.png">
+</template>
+
+<script>
+import ChildDot from './components/Child.vue'
+import ChildAt from '@/components/Child.vue'
+
+export default {
+  components: { ChildDot, ChildAt }
+}
+</script>
+
+<style scoped>
+@import "./styles/main.css";
+@import "@/styles/main.css";
+
+.bg-dot {
+  background: url("./assets/bg.png");
+}
+.bg-at {
+  background: url("@/assets/bg.png");
+}
+</style>
+```
