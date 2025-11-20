@@ -54,15 +54,15 @@ Add it to the HTML file, on the bottom before `</body>` and after the `vue.globa
 <script src="app.js"></script>
 ```
 
-3. `[div "app"]` Don't forget to choose where you want to place the Vue component in the HTML file.<br>
-  Vue will overwrite the content of the div which has the id `app`.
+3. `[div "app"]` Choose where you want to place the Vue component in the HTML file.<br>
+  Vue will overwrite the content of this div, which has the id `app`.
 ```html
 <div id="app">
   <h2>This is the default content, if nothing is overwritten by Vue.</h2>
 </div>
 ```
 
-4. `[data()]` You can also use it with data.
+4. `[data()]` You can use it to create reactive state, like a data object, in the Vue component.
 ```js
 const app = Vue.createApp({
   data() {
@@ -188,9 +188,9 @@ const app = Vue.createApp({
     return {
       // as mentioned before
       books: [
-        { title: 'Name of the Wind', author: 'Patrick Rothfuss' },
-        { title: 'The Way of Kings', author: 'Brandon Sanderson' },
-        { title: 'The Final Empire', author: 'Brandon Sanderson' },
+        { title: 'Name of the Wind', author: 'Patrick Rothfuss', isFavorite: true },
+        { title: 'The Way of Kings', author: 'Brandon Sanderson', isFavorite: false },
+        { title: 'The Final Empire', author: 'Brandon Sanderson', isFavorite: false },
       ],
     }
   },
