@@ -4,7 +4,10 @@
 
 The `computed()` function lets you create reactive values that are **derived from other reactive data**.<br>
 It automatically updates whenever the values it depends on change.<br>
-Think of it as a *smart variable* that recalculates itself only when needed.
+Think of it as a *smart variable* that recalculates itself only when needed.<br>
+<br>
+It's ideal for filtering or transforming data based on the component's state, without repeating logic inside the template.<br>
+Unlike methods, computed properties are cached and only re-evaluated when needed, which improves performance and keeps your code clean and efficient.
 
 > [!tip]
 > This content is related to `ref()`/`reactive()` and `watch()`.

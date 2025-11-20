@@ -1,0 +1,90 @@
+## ▶ Directives
+
+### `v-bind`
+
+`[:TAGATTRIBUTE instead of v-bind:TAGATTRIBUTE]` Attribute binding is used so that the value is evaluated as a reactive JavaScript expression.<br>
+`src="image.filepath"` is just a literal string and will not be interpreted as a variable.<br>
+But `:src="image.filepath"` is evaluated as a reactive JavaScript expression.
+```html
+<div id="app">
+  <a v-bind:href="url" target="_blank">Google Website</a><br>
+  <a :href="url" target="_blank">Google Website</a>
+  <a href="url" target="_blank">Google Website</a> <!-- This is NOT how to use it; It will use `url` as a literal string, instead of a reactive JavaScript expression (which would use `url` as a variable) -->
+</div>
+```
+
+### `v-if`
+
+The `v-if` directive is used to conditionally show or hide a block of content.
+
+```js
+const app = Vue.createApp({
+  data() {
+    return {
+      // as mentioned before
+      showMainBook: false,
+    }
+  },
+
+  methods: {
+    // as mentioned before
+    toggleShowMainBook() { this.showMainBook = !this.showMainBook },
+  },
+})
+```
+```html
+<div id="app">
+  <div v-if="showMainBook">
+    <h2>{{ title }}</h2>
+    <!-- as mentioned before (author, age, increase/decrease age, changeTitle) -->
+  </div>
+
+  <button @click="toggleShowMainBook">
+    <span v-if="showMainBook">Hide main book</span>
+    <span v-if="!showMainBook">Show main book</span> <!-- or simply: <span v-else>Show main book</span> -->
+  </button>
+</div>
+```
+
+### `v-show`
+
+You could do the same as `v-if` with `v-show` instead, but with a subtle difference.<br>
+The `v-show` div below is hidden (using css `display: none;` on its div) once `showMainBook` is `false`, instead of removing the div block completely as happens with `v-if`.<br>
+This means `v-show` is faster than `v-if`, meaning its better for content that needs to show/hide very often.<br>
+But remember that the div is not completely removed, but hidden instead.
+```html
+<div v-show="showMainBook">Currently showing books</div>
+```
+
+### `v-for`
+
+```js
+const app = Vue.createApp({
+  data() {
+    return {
+      // as mentioned before
+      books: [
+        { title: 'Name of the Wind', author: 'Patrick Rothfuss', isFavorite: true },
+        { title: 'The Way of Kings', author: 'Brandon Sanderson', isFavorite: false },
+        { title: 'The Final Empire', author: 'Brandon Sanderson', isFavorite: false },
+      ],
+    }
+  },
+
+  methods: {
+    // as mentioned before
+  },
+})
+```
+```html
+<div id="app">
+  <!-- as mentioned before -->
+  <h2>Books</h2>
+  <ul>
+    <li v-for="book in books">
+      <h2>{{ book.title }}</h2>
+      <p>{{ book.author }}</p>
+    </li>
+  </ul>
+</div>
+```

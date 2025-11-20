@@ -26,6 +26,25 @@ For example:<br>
 
 ### How to use it?
 
+#### Basic usage
+
+```html
+<div id="app">
+  <h2>{{ title }}</h2>
+  <p>{{ age }}</p>
+
+  <button v-on:click="age++">Increase age</button>
+  <button @click="age--">Decrease age</button>
+  <div @click="title = 'Something else'">Click this text to update the title</div>
+  <div @click="changeTitle($event, 'Words of Radiance')">Click this text to update the title</div>
+  <div @click="changeTitle('Words of Radiance')">Click this text to update the title</div>
+</div>
+```
+
+---
+
+#### Available modifiers
+
 * `.stop` — Stop event from bubbling up
 > This stops the event from reaching parent elements.
 ```html
