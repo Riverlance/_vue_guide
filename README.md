@@ -258,6 +258,13 @@ const app = Vue.createApp({
     <li v-for="book in filteredBooks">
       <h2>{{ book.title }}</h2>
       <p>{{ book.author }}</p>
+
+      <!-- Dynamic classes -->
+      <span class="book" :class="book.isFavorite ? 'fav' : ''">Lorem ipsum</span>
+      <span class="book" :class="[book.isFavorite ? 'fav' : '', isSelected ? 'sel' : '']">Lorem ipsum</span>
+      <span class="book" :class="[book.isFavorite ? 'fav' : '']">Lorem ipsum</span>
+      <span class="book" :class="{ fav: book.isFavorite, sel: isSelected }">Lorem ipsum</span>
+      <span class="book" :class="{ fav: book.isFavorite }">Lorem ipsum</span>
     </li>
   </ul>
 </div>
