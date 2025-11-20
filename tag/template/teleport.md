@@ -17,7 +17,6 @@ Common use cases:
 * Dropdowns
 * Sidebars
 * Notifications
-* Loaders / Spinners
 * Context menus (right-click)
 * Floating buttons (like "Back to Top" button)
 * Anything affected by CSS like `z-index`, `overflow:hidden`, `position: relative`

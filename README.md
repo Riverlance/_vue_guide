@@ -7,6 +7,12 @@
 ---
 ---
 
+<!--
+TODO:
+
+* Suspense Component for Spinners / Loaders
+-->
+
 # 💻 Using Vue as a component in a Website
 
 This means, you can have your normal Website and inject Vue on it.<br>
