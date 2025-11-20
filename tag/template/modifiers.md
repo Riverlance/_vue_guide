@@ -13,6 +13,9 @@ Modifiers are added after the event name, like `@click.prevent`, `@submit.stop`,
 > Event modifiers are shortcuts for common `event` behaviors (like `preventDefault`, `stopPropagation`, etc).<br>
 > Readmore: https://vuejs.org/guide/essentials/event-handling
 
+> [!tip]
+> `@click` is an alias for `v-on:click`.
+
 ### When to use it?
 
 Use event modifiers when you need more control over how an event behaves.<br>
