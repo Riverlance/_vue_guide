@@ -37,6 +37,9 @@ To use as component, we will learn the basics only.
 <!-- <script src="https://unpkg.com/vue@3.0.2/dist/vue.global.prod.js"></script> -->
 ```
 
+> [!tip]
+> Use `vue@next` instead of `vue@3.0.2` to get the latest version.
+
 2. `[Add app.js]` Create a script file called `app.js` to init the Vue.
 ```js
 const app = Vue.createApp({
