@@ -40,6 +40,28 @@ Use `defineProps()` when you want the component to accept data from its parent.
 </template>
 ```
 
+* `defineProps()` with 2 variables
+
+```html
+<!-- ChildComponent.vue -->
+
+<template>
+  <p>{{ props.title }}</p> <!-- Output: Hello! -->
+  <p>{{ props.count }}</p> <!-- Output: 7 -->
+</template>
+
+<script setup>
+  const props = defineProps(['title', 'count'])
+  console.log(props.title, props.count)
+</script>
+
+<!-- ParentComponent.vue -->
+
+<template>
+  <ChildComponent title="Hello!" count="7" />
+</template>
+```
+
 * Basic usage (old way)
 
 ```html
