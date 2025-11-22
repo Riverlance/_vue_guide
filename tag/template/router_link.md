@@ -43,14 +43,6 @@ But in small projects, internal applications or critical real-time applications,
   `npm install -g json-server`<br>
   `json-server --watch data/db.json`
 
-> [!tip]
-  `fetch` has a second parameter, which is an object that contains the `method` and `headers` properties.<br>
-  **Examples**:<br>
-  ▶ ADD: `fetch('http://localhost:3000/jobs', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(newJob) }).then(() => emit('added', job.id)).catch(err => console.log(err))`<br>
-  ▶ EDIT PART: `fetch('http://localhost:3000/jobs/1', { method: 'PATCH', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ status: !oldStatus }) }).then(() => emit('complete', job.id)).catch(err => console.log(err))`<br>
-  ▶ OVERWRITE: `fetch('http://localhost:3000/jobs/1', { method: 'PUT', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(editedJob) }).then(() => emit('updated', job.id)).catch(err => console.log(err))`<br>
-  ▶ DELETE: `fetch('http://localhost:3000/jobs/1', { method: 'DELETE' }).then(() => emit('deleted', job.id)).catch(err => console.log(err))`
-
 1. Install `vue-router` (if not already)
 
 ```bash
