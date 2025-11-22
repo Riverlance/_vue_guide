@@ -1,21 +1,75 @@
-## ▶ $refs
+## ▶ $refs and ref()
 
 ### What is it?
 
-The $refs is used to access DOM elements or component instances directly from JavaScript.<br>
-Use $refs as a last option when props, emits and reactive bindings don't meet your needs.
+#### `ref()`
+
+Reactive state should be handled with `ref()` for primitives and objects.<br>
+You can also use `reactive()` for objects.
+
+#### `$refs`
+
+The `$refs` is used to access DOM elements or component instances directly from JavaScript.<br>
+Use `$refs` as a last option when props, emits and reactive bindings don't meet your needs.
 
 > [!warning]
-> Vue recommends using $refs only when necessary, because it breaks the reactive flow.<br>
-> Meaning you bypass Vue's preferred way of managing state and UI updates.
+  Relying on `$refs` (instead of `ref()`) to read or manipulate state is discouraged.<br>
+  It should be used only when state cannot be managed through Vue's reactivity system, since it breaks the reactive flow.<br>
+  e.g., focusing inputs, reading element sizes, manipulating non-Vue libraries or working with canvas.
 
 ### When to use it?
+
+#### `ref()`
+
+Use ref() to make any value reactive — it works for both primitives and objects.<br>
+It is also the safest option when exposing state from composition functions because individual properties remain reactive.
+
+#### `reactive()`
+
+Use `reactive()` for objects only.<br>
+It allows you to mutate the object directly without `.value` (e.g., `obj.name = 'Yoshi` instead of `obj.value.name = 'Yoshi'`).<br>
+But there are some drawbacks:<br>
+* It cannot be used for primitive values, because they lose reactivity.
+* It is not ideal when returning individual properties of an object (instead of the entire object) from a composition function, because destructuring the object can break reactivity.
+* `ref()` is more predictable when you need to expose the state.
+
+#### `$refs`
 
 * **Case 1**: To manipulate a DOM element directly (e.g., focus an input, add/remove classes).
 * **Case 2**: To call methods on a child component (e.g., open a modal, reset a form).
 * **Case 3**: To read internal state of a child component that's not exposed via props or emits.
 
+#### Resume
+
+In short, use:
+* `ref()` for primitive values and objects;
+* `reactive()` for objects only when you don't want to use `.value`; and
+* `$refs` when it is not possible to solve the problem using props, emits or reactive bindings.
+
 ### How to use it?
+
+#### `ref()`
+
+```html
+<template>
+  <p>{{ name }}</p>
+  <button @click="handleClick">Update Name</button>
+</template>
+
+<script setup>
+  import { ref } from 'vue'
+
+  const name = ref('John Doe')
+
+  const handleClick = () => {
+    name.value = 'Jane Doe' // Updates on templates because it is reactive (`ref()`)
+  }
+
+  return { name, handleClick }
+</script>
+```
+
+#### `$refs`
 
 * **Case 1** - To manipulate a DOM element directly
 
@@ -298,6 +352,6 @@ return { obj, update }
 
 #### Resume
 
-If you use `reactive`, always work with the entire object, both when creating and when returning it from a composition function.
-Avoid using `reactive` for primitive values or individual properties in the return.
+If you use `reactive`, always work with the entire object, both when creating and when returning it from a composition function.<br>
+Avoid using `reactive` for primitive values or individual properties in the return.<br>
 For both reasons, `ref` is generally safer and simpler, especially when dealing with primitive values or when exposing properties individually from composition functions.
