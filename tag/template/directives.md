@@ -88,3 +88,94 @@ const app = Vue.createApp({
   </ul>
 </div>
 ```
+
+### `v-model`
+
+It creates two-way data binding between your template and your JavaScript state.<br>
+In a nutshell, it means: Keep this input and this variable always synchronized.<br>
+<br>
+* When the user changes the input, the variable in your component updates automatically.<br>
+* When the variable changes in code, the input also updates automatically.<br>
+<br>
+It saves you from manually handling @input events and :value bindings.<br>
+It keeps your UI and your data in sync with very little code.
+```vue
+<template>
+  <input v-model="name" placeholder="Your name" />
+  <!-- <input :value="name" @input="name = $event.target.value" placeholder="Your name" /> --> <!-- This is the same as the above line -->
+
+  <p>Hello, {{ name }}!</p>
+</template>
+
+<script setup>
+import { ref } from 'vue'
+
+const name = ref('')
+</script>
+```
+
+A complex example - multiple checkboxes:
+```vue
+<template>
+  <form>
+    <label>Names:</label>
+    <div>
+      <input type="checkbox" value="river" v-model="names" />
+      <label>River</label>
+    </div>
+    <div>
+      <input type="checkbox" value="mario" v-model="names" />
+      <label>Mario</label>
+    </div>
+    <div>
+      <input type="checkbox" value="yoshi" v-model="names" />
+      <label>Yoshi</label>
+    </div>
+  </form>
+
+  <p>Names: {{ names }}</p> <!-- ['river', 'mario', 'yoshi'] if all checkboxes are checked -->
+</template>
+
+<script setup>
+import { ref } from 'vue'
+
+const names = ref([])
+</script>
+```
+
+Another complex example - multiple inputs with a comma-separated list of skills:
+```vue
+<template>
+  <form>
+    <label>Skills (press Alt+, to add):</label>
+    <input type="text" v-model="tempSkill" @keyup.alt="addSkill">
+
+    <div v-for="skill in skills" :key="skill" class="pill">
+      <span @click="deleteSkill(skill)">{{ skill }}</span>
+    </div>
+  </form>
+
+  <p>Skills: {{ skills }}</p>
+</template>
+
+<script setup>
+import { ref } from 'vue'
+
+const tempSkill = ref('')
+const skills    = ref([])
+
+const addSkill = (e) => {
+  if (e.key === ',' && tempSkill.value) {
+    if (!skills.value.includes(tempSkill.value))
+      skills.value.push(tempSkill.value)
+    tempSkill.value = ''
+  }
+}
+
+const deleteSkill = (skill) => {
+  skills.value = skills.value.filter((item) => {
+    return item !== skill
+  })
+}
+</script>
+```
