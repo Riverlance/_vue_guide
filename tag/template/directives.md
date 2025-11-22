@@ -99,7 +99,7 @@ In a nutshell, it means: Keep this input and this variable always synchronized.<
 <br>
 It saves you from manually handling @input events and :value bindings.<br>
 It keeps your UI and your data in sync with very little code.
-```vue
+```html
 <template>
   <input v-model="name" placeholder="Your name" />
   <!-- <input :value="name" @input="name = $event.target.value" placeholder="Your name" /> --> <!-- This is the same as the above line -->
@@ -115,7 +115,7 @@ const name = ref('')
 ```
 
 A complex example - multiple checkboxes:
-```vue
+```html
 <template>
   <form>
     <label>Names:</label>
@@ -144,7 +144,7 @@ const names = ref([])
 ```
 
 Another complex example - multiple inputs with a comma-separated list of skills:
-```vue
+```html
 <template>
   <form>
     <label>Skills (press Alt+, to add):</label>
@@ -177,5 +177,29 @@ const deleteSkill = (skill) => {
     return item !== skill
   })
 }
+</script>
+```
+
+`v-model` isn't just for inputs.<br>
+It works in any component (including components you create) as long as the component implements the `v-model` interface (`modelValue` + `update:modelValue`).
+```html
+<!-- Parent.vue -->
+
+<Toggle v-model="enabled" />
+<p>Enabled: {{ enabled }}</p>
+
+<!-- Toggle.vue -->
+
+<template>
+  <div @click="toggle">
+    {{ modelValue ? 'ON' : 'OFF' }} <!-- The value is bound to the `modelValue` prop -->
+  </div>
+</template>
+
+<script setup>
+const props = defineProps(['modelValue'])
+const emit = defineEmits(['update:modelValue'])
+
+const toggle = () => emit('update:modelValue', !props.modelValue) // The value is emitted to the `modelValue` prop
 </script>
 ```
