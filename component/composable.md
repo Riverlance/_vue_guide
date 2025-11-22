@@ -2,7 +2,8 @@
 
 ### What is it?
 
-A **composable** is a function, in the **Composition API**, that encapsulates **reactive state and logic**, so it can be reused across multiple components.<br>
+In the **Composition API**, a **composable** is a function that encapsulates **reactive state and logic**, so it can be reused across multiple components.<br>
+It's like a small library of functions that you can import and use in your components of Composition API.<br>
 It usually returns reactive variables (`ref`, `reactive`) and functions to interact with them.
 
 - Composables help **separate concerns** and keep components clean.
