@@ -33,11 +33,11 @@ Use it to organize and encapsulate application JavaScript logic into reusable fi
 ### How to use it?
 
 ```js
-// postsComposable.js
+// myWebsite.js
 
 import { ref } from 'vue'
 
-const getPosts = () => {
+const usePosts = () => {
   const posts = ref([])
   const error = ref(null)
 
@@ -54,7 +54,7 @@ const getPosts = () => {
   return { posts, error, load }
 }
 
-export { getPosts }
+export { usePosts } // Export multiple functions
 ```
 
 ```html
@@ -71,10 +71,104 @@ export { getPosts }
 </template>
 
 <script setup>
-import { getPosts } from '@/composables/postsComposable'
+import { usePosts } from '@/composables/myWebsite' // Import multiple functions
+// import * as postsAPI from '@/composables/myWebsite' // Import multiple functions; Another option (e.g, `postsAPI.usePosts()`)
 import PostListView from '@/components/PostListView.vue'
 
-const { posts, error, load } = getPosts()
+const { posts, error, load } = usePosts()
 load()
 </script>
+```
+
+If you want a composable with a single function, you can do something like this:
+```js
+// myWebsite.js
+
+import { ref } from 'vue'
+
+const usePosts = () => {
+  // ... same content
+}
+
+export default usePosts // Export a single function
+```
+
+```html
+<!-- HomeView.vue -->
+
+<template>
+  <!-- Same content -->
+</template>
+
+<script setup>
+import usePosts from '@/composables/myWebsite' // Import a single function
+import PostListView from '@/components/PostListView.vue'
+
+const { posts, error, load } = usePosts()
+load()
+</script>
+```
+
+Simplified (best) way:
+
+```js
+// myWebsite.js
+
+import { ref } from 'vue'
+
+/**
+ * Fetches posts from an API.
+ *
+ * @example
+ * const { posts, error, load } = usePosts()
+ * load()
+ */
+export function usePosts() { ... } // Export a single function
+export async function useSubmit() { ... } // Export another function
+```
+
+```html
+<!-- HomeView.vue -->
+
+<template>
+  <!-- Same content -->
+</template>
+
+<script setup>
+import * as myWebsite from '@/composables/myWebsite' // Import multiple functions
+// import { usePosts } from '@/composables/myWebsite' // Import multiple functions // You still can do this
+import PostListView from '@/components/PostListView.vue'
+
+const { posts, error, load } = myWebsite.usePosts()
+load()
+</script>
+```
+
+For a default function:
+```js
+// myWebsite.js
+export default function usePosts() { ... } // Export default function
+```
+```html
+<!-- HomeView.vue -->
+
+<template>
+  <!-- Same content -->
+</template>
+
+<script setup>
+import usePosts from '@/composables/myWebsite' // Import default function
+import PostListView from '@/components/PostListView.vue'
+
+const { posts, error, load } = usePosts()
+load()
+</script>
+```
+
+> [!warning]
+  Avoid using `export const foo = () => { ... }` (use `export function foo() { ... }` instead) because it loses hoisting and the function name becomes `undefined` until it is declared.<br>
+  Example:<br>
+  usePosts() // Error: Cannot access before initialization<br>
+  export const usePosts = () => { ... }
+
 ```
