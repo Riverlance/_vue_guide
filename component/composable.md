@@ -171,4 +171,74 @@ load()
   usePosts() // Error: Cannot access before initialization<br>
   export const usePosts = () => { ... }
 
+---
+
+### POST request example
+
+```js
+// Composable
+// myWebsite.js
+import { ref } from 'vue'
+
+export function useSubmit() {
+  const loading = ref(false)
+  const error = ref(null)
+
+  const handleSubmit = async (payload) => {
+    loading.value = true
+    error.value = null
+    try {
+      const res = await fetch('/api/submit', {
+        method: 'POST',
+        body: JSON.stringify(payload)
+      })
+      return await res.json()
+    } catch (err) {
+      error.value = err
+    } finally {
+      loading.value = false
+    }
+  }
+
+  return { handleSubmit, loading, error }
+}
+```
+```html
+<!-- HomeView.vue -->
+
+<script setup>
+import { useSubmit } from '@/composables/myWebsite'
+
+const { handleSubmit, loading, error } = useSubmit()
+await handleSubmit({ name: 'Gabriel' })
+</script>
+```
+
+---
+
+### Documentation
+
+```js
+/**
+ * Prints the first parameter.
+ *
+ * @param {any} firstParam The first parameter.
+ * @returns {boolean} `true` as always, `false` as never.
+ * @example
+ *
+ * ### Example
+ *
+ * ```js
+ * test(7)
+ * // 7
+ *
+ * console.log(test(7))
+ * // 7
+ * // true
+ * ```
+ */
+export function test(firstParam) {
+  console.log(firstParam)
+  return true
+}
 ```
